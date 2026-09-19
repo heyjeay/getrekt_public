@@ -1,5 +1,5 @@
-# Builds the GetRekt website (site/) and publishes it to GitHub Pages:
-# https://heyjeay.github.io/getrekt_public/
+# Builds the GetRekt website (site/) and publishes it to the gh-pages branch, which GitHub Pages
+# serves at https://heyjeay.github.io/getrekt_public/
 name: Website
 
 on:
@@ -9,20 +9,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,18 +25,18 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: site/package-lock.json
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Build
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
+          touch dist/.nojekyll
+      - name: Publish to gh-pages
+        working-directory: site/dist
+        run: |
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Publish website from ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages

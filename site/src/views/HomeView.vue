@@ -1,0 +1,108 @@
+<script setup lang="ts">
+import { useHead } from '@unhead/vue'
+import { site } from '@/site'
+
+const base = import.meta.env.BASE_URL
+
+useHead({
+  title: 'GetRekt: clip your best plays, post them anywhere',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'GetRekt is a free game recorder for Windows. Press F4 to save the last 30 seconds, edit with AI captions, and post straight to TikTok, YouTube Shorts and Discord.',
+    },
+  ],
+})
+
+const features = [
+  { title: 'Reclip', text: 'Always ready in the background. Press F4 and the last 30 seconds become a clip. Nothing is kept until you ask.' },
+  { title: 'Smooth 60 fps', text: 'Hardware encoding on your graphics card, so games keep their frame rate and clips stay sharp.' },
+  { title: 'Clip editor', text: 'Trim, split, filters, crop to 9:16 for phones, volume, undo. Saved as a new clip; the original is never touched.' },
+  { title: 'AI captions', text: 'Captions made on your PC, word by word, in bold styles. Nothing is uploaded to make them.' },
+  { title: 'Smart highlights', text: 'Finds the loudest, funniest moments in long recordings so you don’t have to scrub.' },
+  { title: 'Say “clip that”', text: 'Clip hands-free. The voice command listens on your PC only and ignores everything but the phrase.' },
+]
+
+const posting = [
+  {
+    title: 'YouTube & Shorts',
+    text:
+      'Connect your channel once, signing in on Google’s own page. When you choose to post a clip, GetRekt uploads that one video to your channel with the title, description and visibility you pick, and shows the link. It reads your channel name so you can see which channel you’re posting to.',
+  },
+  {
+    title: 'TikTok',
+    text:
+      'Connect your account once, signing in on TikTok’s own page. Send a clip to your TikTok drafts to finish in the app, or post it directly after choosing who can see it, whether comments, Duet and Stitch are allowed, and any brand disclosure. GetRekt shows your TikTok name so you know which account you’re posting to.',
+  },
+  {
+    title: 'Discord',
+    text: 'Paste a channel’s webhook link and clips can be posted to that channel. No bot and no sign-in.',
+  },
+]
+</script>
+
+<template>
+  <div>
+    <!-- Hero -->
+    <section class="grid items-center gap-10 py-10 sm:py-16 md:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="mb-3 text-xs font-extrabold tracking-[0.2em] text-ember-tint uppercase">Free game recorder for Windows</p>
+        <h1 class="text-4xl leading-[1.05] font-black tracking-tight sm:text-6xl">
+          Clip your best plays.<br />
+          <span class="text-ember">Post them anywhere.</span>
+        </h1>
+        <p class="mt-5 max-w-xl text-lg leading-8 text-stone-300">
+          GetRekt records your games in the background. Press <kbd class="rounded-md bg-white/10 px-1.5 py-0.5 text-base font-bold">F4</kbd> and
+          the moment is saved, ready to edit, caption and post to TikTok, YouTube Shorts or Discord.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a :href="site.download" class="rounded-2xl bg-ember px-6 py-3.5 font-extrabold text-white shadow-[0_12px_32px_-10px_rgb(240_72_36/0.9)] hover:bg-ember-deep">
+            Download for Windows
+          </a>
+          <a :href="site.discord" class="rounded-2xl border border-white/10 px-6 py-3.5 font-extrabold text-stone-200 hover:border-white/25 hover:text-white">
+            Join the Discord
+          </a>
+        </div>
+      </div>
+      <img :src="`${base}logo.png`" alt="GetRekt logo" width="512" height="512" class="mx-auto w-56 rounded-[3rem] shadow-2xl sm:w-72" />
+    </section>
+
+    <!-- Features -->
+    <section class="py-8">
+      <h2 class="mb-6 text-2xl font-black">Everything you need to share the moment</h2>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div v-for="f in features" :key="f.title" class="rounded-3xl border border-white/[0.06] bg-ink-2 p-5">
+          <h3 class="font-extrabold text-white">{{ f.title }}</h3>
+          <p class="mt-1.5 text-sm leading-6 text-stone-400">{{ f.text }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Posting -->
+    <section class="py-8">
+      <h2 class="mb-2 text-2xl font-black">Posting, only when you say so</h2>
+      <p class="mb-6 max-w-3xl text-stone-400">
+        GetRekt only posts when you tell it to. You connect the accounts you want and choose each post, or turn on Auto-post and pick
+        where it goes; every auto-post counts down on screen for 5 seconds so you can cancel. Disconnect any account at any time in
+        Settings → Social.
+      </p>
+      <div class="grid gap-3 md:grid-cols-3">
+        <div v-for="p in posting" :key="p.title" class="rounded-3xl border border-white/[0.06] bg-ink-2 p-5">
+          <h3 class="font-extrabold text-white">{{ p.title }}</h3>
+          <p class="mt-1.5 text-sm leading-6 text-stone-400">{{ p.text }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy summary -->
+    <section class="mt-8 rounded-3xl border border-ember/20 bg-ember/[0.06] p-6 sm:p-8">
+      <h2 class="text-2xl font-black">Your clips stay on your PC</h2>
+      <p class="mt-3 max-w-3xl leading-7 text-stone-300">
+        GetRekt has no accounts and no servers of its own. Recordings, captions and sign-ins are kept on your computer, and a clip only
+        leaves it when you post or share it. Read the <RouterLink to="/privacy" class="font-bold text-ember-tint underline underline-offset-2">privacy policy</RouterLink>
+        and <RouterLink to="/terms" class="font-bold text-ember-tint underline underline-offset-2">terms of service</RouterLink>.
+      </p>
+    </section>
+  </div>
+</template>

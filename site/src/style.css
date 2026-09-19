@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+@import '@fontsource/montserrat/latin-500.css';
+@import '@fontsource/montserrat/latin-700.css';
+@import '@fontsource/montserrat/latin-800.css';
+@import '@fontsource/montserrat/latin-900.css';
+
+/* GetRekt's app colours. */
+@theme {
+  --color-ember: rgb(240 72 36);
+  --color-ember-tint: rgb(255 150 90);
+  --color-ember-deep: rgb(176 32 18);
+  --color-ink-0: rgb(15 13 13);
+  --color-ink-1: rgb(21 18 18);
+  --color-ink-2: rgb(27 23 22);
+  --color-ink-3: rgb(35 30 29);
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  background: var(--color-ink-0);
+  color: #f5f1ef;
+  color-scheme: dark;
+}
+body {
+  @apply min-h-screen font-sans antialiased;
+}
+
+/* Long-form text on the legal pages. */
+.prose-rekt {
+  @apply text-[15px] leading-7 text-stone-300;
+}
+.prose-rekt h2 {
+  @apply mt-10 mb-3 text-xl font-black text-white;
+}
+.prose-rekt h3 {
+  @apply mt-6 mb-2 text-base font-extrabold text-white;
+}
+.prose-rekt p,
+.prose-rekt ul {
+  @apply mb-4;
+}
+.prose-rekt ul {
+  @apply list-disc space-y-1.5 pl-6 marker:text-ember;
+}
+.prose-rekt a {
+  @apply font-bold text-ember-tint underline decoration-ember/40 underline-offset-2 hover:decoration-ember-tint;
+}
+.prose-rekt strong {
+  @apply font-bold text-white;
+}
+
+/* Page changes fade and rise slightly. */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.page-leave-to {
+  opacity: 0;
+}
